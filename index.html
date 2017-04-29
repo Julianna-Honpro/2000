@@ -35,6 +35,8 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+    <script type="text/javascript" src="echarts.min.js"></script>
+
 </head>
 
 <body id="page-top" class="index">
@@ -297,9 +299,71 @@ Highcharts.chart('chart2', {
                 <div class="col-md-2">
                    <font size="1"> (Caption: 2016 <a href="https://www.iie.org/opendoors", target="_blank">Opendoors'</a> report on the origins of the international students that are studying in the US.) </font>
                 </div>
-                <div class="col-md-8 col-sm-6">
-                   <img src="img/2000-3.jpg" alt="2016 Opendoors' report on the origins of the international students that are studying in the US" style="width:780px;height:500px;">
-                </div>
+                <div class="col-md-8 col-sm-6" id="map" style="width: 700px;height:500px;">
+<script type="text/javascript">
+ var myMap = echarts.init(document.getElementById('map'));
+    var uploadedDataURL = "world.json";
+myMap.showLoading();
+$.getJSON(uploadedDataURL, function (geoJson) {
+  myMap.hideLoading();
+    echarts.registerMap('world', geoJson);
+    myMap.setOption(option = {
+               title: {
+        text: 'Origins of International Students in the US',
+        subtext: 'the Top 25 in 2015/16',
+        sublink: 'https://www.iie.org/Research-and-Insights/Open-Doors/Data/International-Students/All-Places-of-Origin',
+        left: 'center',
+        top: 'top'
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: function (params) {
+            var value = (params.value + ' students').split('.');
+            value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
+            return '<br/>' + params.name + ' : ' + value;
+        }
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    visualMap: {
+        min: 0,
+        max: 350000,
+        text:['High','Low'],
+        realtime: false,
+        calculable: true,
+        inRange: {
+            color: ['lightskyblue','yellow', 'orangered']
+        }
+    },
+    series: [
+        {
+            name: 'Top 25 Origins of International Students in the US',
+            type: 'map',
+            mapType: 'world',
+            roam: true,
+            itemStyle:{
+                emphasis:{label:{show:true}}
+            },
+            data:[
+               {name: 'Burundi', value:148}, {name: 'Djibouti', value:9}, {name: 'Eritrea', value:109}, {name: 'Ethiopia', value:1517}, {name: 'Kenya', value:3019}, {name: 'Rwanda', value:928}, {name: 'Seychelles', value:20}, {name: 'Somaliand', value:35}, {name: 'South Sudan', value:36}, {name: 'Sudan', value:253}, {name: 'United Republic of Tanzania', value:840}, {name: 'Uganda', value:776}, {name: 'Cameroon', value:1210}, {name: 'Central African Republic', value:13}, {name: 'Chad', value:52}, {name: 'Republic of the Congo', value:337}, {name: 'Democratic Republic of the Congo', value:949}, {name: 'Equatorial Guinea', value:339}, {name: 'Gabon', value:410}, {name: 'Angola', value:1296}, {name: 'Botswana', value:246}, {name: 'Comoros', value:32}, {name: 'Lesotho', value:61}, {name: 'Madagascar', value:126}, {name: 'Malawi', value:289}, {name: 'Mauritius', value:250}, {name: 'Mozambique', value:109}, {name: 'Namibia', value:76}, {name: 'Reunion', value:5}, {name: 'South Africa', value:1813}, {name: 'Swaziland', value:192}, {name: 'Zambia', value:473}, {name: 'Zimbabwe', value:1295}, {name: 'West Africa', value:18100}, {name: 'Benin', value:259}, {name: 'Burkina Faso', value:540}, {name: 'Cabo Verde/Cape Verde', value:102}, {name: 'Ivory Coast', value:1229}, {name: 'Gambia', value:274}, {name: 'Ghana', value:3049}, {name: 'Guinea', value:94}, {name: 'Guinea Bissau', value:18}, {name: 'Liberia', value:205}, {name: 'Mali', value:331}, {name: 'Mauritania', value:97}, {name: 'Niger', value:246}, {name: 'Nigeria', value:10674}, {name: 'Saint Helena', value:3}, {name: 'Senegal', value:603}, {name: 'Sierra Leone', value:167}, {name: 'Togo', value:209}, {name: 'China', value:328547}, {name: 'Hong Kong', value:7923}, {name: 'Japan', value:19060}, {name: 'Macau', value:586}, {name: 'Mongolia', value:1434}, {name: 'North Korea', value:18}, {name: 'South Korea', value:61007}, {name: 'Taiwan', value:21127}, {name: 'South and Central Asia', value:195135}, {name: 'Afghanistan', value:498}, {name: 'Bangladesh', value:6513}, {name: 'Bhutan', value:143}, {name: 'India', value:165918}, {name: 'Kazakhstan', value:1935}, {name: 'Kyrgyzstan', value:227}, {name: 'Maldives', value:37}, {name: 'Nepal', value:9662}, {name: 'Pakistan', value:6141}, {name: 'Sri Lanka', value:3080}, {name: 'Tajikistan', value:235}, {name: 'Turkmenistan', value:216}, {name: 'Uzbekistan', value:530}, {name: 'Southeast Asia', value:54688}, {name: 'Brunei', value:59}, {name: 'Cambodia', value:499}, {name: 'Indonesia', value:8727}, {name: 'Laos', value:63}, {name: 'Malaysia', value:7834}, {name: 'Myanmar', value:1194}, {name: 'Philippines', value:2886}, {name: 'Singapore', value:4865}, {name: 'Thailand', value:7113}, {name: 'Timor-Leste/East Timor', value:45}, {name: 'Vietnam', value:21403}, {name: 'Albania', value:705}, {name: 'Andorra', value:11}, {name: 'Armenia', value:270}, {name: 'Austria', value:1141}, {name: 'Azerbaijan', value:391}, {name: 'Belarus', value:323}, {name: 'Belgium', value:1094}, {name: 'Bosnia and Herzegovina', value:309}, {name: 'Bulgaria', value:1016}, {name: 'Croatia', value:527}, {name: 'Cyprus', value:401}, {name: 'Czech Republic', value:749}, {name: 'Denmark', value:1486}, {name: 'Estonia', value:191}, {name: 'Finland', value:714}, {name: 'France', value:8764}, {name: 'Georgia', value:543}, {name: 'Germany', value:10145}, {name: 'Gibraltar', value:4}, {name: 'Greece', value:2199}, {name: 'Hungary', value:773}, {name: 'Iceland', value:382}, {name: 'Ireland', value:1183}, {name: 'Italy', value:5155}, {name: 'Kosovo', value:268}, {name: 'Latvia', value:281}, {name: 'Liechtenstein', value:8}, {name: 'Lithuania', value:315}, {name: 'Luxembourg', value:86}, {name: 'Macedonia', value:236}, {name: 'Malta', value:23}, {name: 'Moldova', value:281}, {name: 'Monaco', value:23}, {name: 'Montenegro', value:126}, {name: 'Netherlands', value:2445}, {name: 'Norway', value:2391}, {name: 'Poland', value:1460}, {name: 'Portugal', value:919}, {name: 'Romania', value:1105}, {name: 'Russia', value:5444}, {name: 'San Marino', value:3}, {name: 'Serbia', value:1023}, {name: 'Slovakia', value:343}, {name: 'Slovenia', value:256}, {name: 'Spain', value:6640}, {name: 'Sweden', value:4297}, {name: 'Switzerland', value:1480}, {name: 'Turkey', value:10691}, {name: 'Ukraine', value:1680}, {name: 'United Kingdom', value:11599}, {name: 'Vatican City/Holy See', value:6}, {name: 'Europe, Unspecified', value:10}, {name: 'Anguilla', value:18}, {name: 'Antigua and Barbuda', value:228}, {name: 'Aruba', value:89}, {name: 'Bahamas', value:2027}, {name: 'Barbados', value:319}, {name: 'Bermuda', value:319}, {name: 'British Virgin Islands', value:95}, {name: 'Cayman Islands', value:165}, {name: 'Cuba', value:153}, {name: 'Curacao', value:117}, {name: 'Dominica', value:238}, {name: 'Dominican Republic', value:1513}, {name: 'Grenada', value:186}, {name: 'Guadeloupe', value:11}, {name: 'Haiti', value:946}, {name: 'Jamaica', value:2510}, {name: 'Martinique', value:9}, {name: 'Montserrat', value:4}, {name: 'St. Kitts and Nevis', value:222}, {name: 'St. Lucia', value:265}, {name: 'St. Vincent and the Grenadines', value:89}, {name: 'Sint Maarten', value:92}, {name: 'Trinidad and Tobago', value:1381}, {name: 'Turks and Caicos', value:44}, {name: 'Caribbean, Unspecified', value:2}, {name: 'Belize', value:308}, {name: 'Costa Rica', value:1148}, {name: 'El Salvador', value:1632}, {name: 'Guatemala', value:1245}, {name: 'Honduras', value:1985}, {name: 'Mexico', value:16733}, {name: 'Nicaragua', value:395}, {name: 'Panama', value:1537}, {name: 'Argentina', value:2201}, {name: 'Bolivia', value:1142}, {name: 'Brazil', value:19370}, {name: 'Chile', value:2630}, {name: 'Colombia', value:7815}, {name: 'Ecuador', value:2889}, {name: 'Falkland Islands', value:2}, {name: 'French Guiana', value:7}, {name: 'Guyana', value:246}, {name: 'Paraguay', value:564}, {name: 'Peru', value:3256}, {name: 'Suriname', value:84}, {name: 'Uruguay', value:410}, {name: 'Venezuela', value:8267}, {name: 'Bahrain', value:469}, {name: 'Iran', value:12269}, {name: 'Iraq', value:1901}, {name: 'Israel', value:2343}, {name: 'Jordan', value:2330}, {name: 'Kuwait', value:9772}, {name: 'Lebanon', value:1486}, {name: 'Oman', value:2856}, {name: 'Palestinian Territories', value:468}, {name: 'Qatar', value:1443}, {name: 'Saudi Arabia', value:61287}, {name: 'Syria', value:783}, {name: 'United Arab Emirates', value:2920}, {name: 'Yemen', value:599}, {name: 'Algeria', value:158}, {name: 'Egypt', value:3442}, {name: 'Libya', value:1514}, {name: 'Morocco', value:1495}, {name: 'Tunisia', value:692}, {name: 'Canada', value:26973}, {name: 'Australia', value:4752}, {name: 'Cook Islands', value:5}, {name: 'Fiji', value:111}, {name: 'French Polynesia', value:31}, {name: 'Kiribati', value:53}, {name: 'Marshall Islands', value:18}, {name: 'Micronesia', value:22}, {name: 'Nauru', value:0}, {name: 'New Caledonia', value:2}, {name: 'New Zealand', value:1608}, {name: 'Niue', value:2}, {name: 'Norfolk Island', value:2}, {name: 'Palau', value:12}, {name: 'Papua New Guinea', value:87}, {name: 'Samoa', value:60}, {name: 'Solomon Islands', value:5}, {name: 'Tonga', value:130}, {name: 'Tuvalu', value:4}, {name: 'Vanuatu', value:9}, {name: 'Wallis and Futuna', value:4}
+
+            ]
+        }
+    ]
+})
+})
+myChart.setOption(option)
+              </script>    
+                             </div>
                 <div class="col-md-2">
                 </div>
             </div>
