@@ -299,18 +299,16 @@ Highcharts.chart('chart2', {
                 <div class="col-md-2">
                    <font size="1"> (Caption: 2016 <a href="https://www.iie.org/opendoors", target="_blank">Opendoors'</a> report on the origins of the international students that are studying in the US.) </font>
                 </div>
-                <div class="col-md-8 col-sm-6" id="map" style="width: 700px;height:500px;">
-<script type="text/javascript">
- var myMap = echarts.init(document.getElementById('map'));
-    var uploadedDataURL = "world.json";
-myMap.showLoading();
-$.getJSON(uploadedDataURL, function (geoJson) {
-  myMap.hideLoading();
-    echarts.registerMap('world', geoJson);
-    myMap.setOption(option = {
+                <div class="col-md-8 col-sm-6" id="mymap" style="width: 700px;height:380px;">
+<script src="echarts.min.js"></script>
+<script src="world.js"></script>
+<script>
+var chart = echarts.init(document.getElementById('mymap'));
+chart.setOption(
+     option = {
                title: {
-        text: 'Origins of International Students in the US',
-        subtext: 'the Top 25 in 2015/16',
+        text: 'All Origins of International Students in the US',
+        subtext: 'in 2015/16',
         sublink: 'https://www.iie.org/Research-and-Insights/Open-Doors/Data/International-Students/All-Places-of-Origin',
         left: 'center',
         top: 'top'
@@ -321,17 +319,6 @@ $.getJSON(uploadedDataURL, function (geoJson) {
             var value = (params.value + ' students').split('.');
             value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
             return '<br/>' + params.name + ' : ' + value;
-        }
-    },
-    toolbox: {
-        show: true,
-        orient: 'vertical',
-        left: 'right',
-        top: 'center',
-        feature: {
-            dataView: {readOnly: false},
-            restore: {},
-            saveAsImage: {}
         }
     },
     visualMap: {
@@ -360,8 +347,6 @@ $.getJSON(uploadedDataURL, function (geoJson) {
         }
     ]
 })
-})
-myChart.setOption(option)
               </script>    
                              </div>
                 <div class="col-md-2">
